@@ -1,0 +1,6 @@
+development:
+  password: THEMEKIT_PASSWORD
+  theme_id: THEMEKIT_THEME_ID
+  store: THEMEKIT_STORE
+  proxy:  THEMEKIT_PROXY
+  ignore_files: THEMEKIT_IGNORES

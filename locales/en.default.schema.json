@@ -396,7 +396,7 @@
           "label": "Large"
         },
         "options__4": {
-          "label": "Extra large"
+          "label": "Tiny"
         }
       }
     },
@@ -2104,6 +2104,14 @@
         }
       },
       "blocks": {
+        "meta": {
+          "name": "Meta",
+          "settings": {
+            "text": {
+              "label": "Meta"
+            }
+          }
+        },
         "heading": {
           "name": "Heading",
           "settings": {
@@ -2432,6 +2440,24 @@
       },
       "presets": {
         "name": "Rich text"
+      }
+    },
+    "quote": {
+      "name": "Quote",
+      "settings" : {
+        "heading" : {
+          "label": "Quote"
+        }
+      },
+      "blocks" : {
+        "blockquote": {
+          "settings" : {
+            "label" : "Blockquote"
+          }
+        }
+      },
+      "presets": {
+        "name": "Quote"
       }
     },
     "video": {

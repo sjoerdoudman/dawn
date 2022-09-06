@@ -14,13 +14,14 @@
     }
   }
 {%- endstyle -%}
-
 <div class="newsletter center {% if section.settings.full_width == false %}newsletter--narrow page-width{% endif %}">
   <div class="newsletter__wrapper color-{{ section.settings.color_scheme }} gradient content-container isolate{% if section.settings.full_width %} content-container--full-width{% endif %} section-{{ section.id }}-padding">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when '@app' -%}
           {% render block %}
+        {%- when 'meta' -%}
+          <span class="meta" {{ block.shopify_attributes }}>{{ block.settings.meta | escape }}</span>
         {%- when 'heading' -%}
           <h2 class="{{ block.settings.heading_size }}" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</h2>
         {%- when 'paragraph' -%}
@@ -71,7 +72,10 @@
     {%- endfor -%}
   </div>
 </div>
-
+{% javascript %}
+  this.newsletter = document.getElementsByClassName('newsletter')[0];
+  console.log(this.newsletter);
+{% endjavascript %}
 {% schema %}
 {
   "name": "t:sections.newsletter.name",
@@ -121,6 +125,11 @@
       "content": "t:sections.all.padding.section_padding_heading"
     },
     {
+      "type": "text",
+      "id": "meta",
+      "label": "t:sections.newsletter.blocks.meta.settings.text.label"
+    },
+    {
       "type": "range",
       "id": "padding_top",
       "min": 0,
@@ -142,6 +151,32 @@
     }
   ],
   "blocks": [
+    {
+      "type": "meta",
+      "name": "t:sections.newsletter.blocks.meta.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "meta",
+          "default": "Here is an idea",
+          "label": "t:sections.newsletter.blocks.meta.settings.text.label"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "name": "t:sections.newsletter.blocks.paragraph.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>Be the first to know about new collections and exclusive offers.</p>",
+          "label": "t:sections.newsletter.blocks.paragraph.settings.paragraph.label"
+        }
+      ]
+    },
     {
       "type": "heading",
       "name": "t:sections.newsletter.blocks.heading.name",
@@ -168,23 +203,14 @@
             {
               "value": "h0",
               "label": "t:sections.all.heading_size.options__3.label"
+            },
+            {
+              "value": "h3",
+              "label": "t:sections.all.heading_size.options__4.label"
             }
           ],
           "default": "h1",
           "label": "t:sections.all.heading_size.label"
-        }
-      ]
-    },
-    {
-      "type": "paragraph",
-      "name": "t:sections.newsletter.blocks.paragraph.name",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "richtext",
-          "id": "text",
-          "default": "<p>Be the first to know about new collections and exclusive offers.</p>",
-          "label": "t:sections.newsletter.blocks.paragraph.settings.paragraph.label"
         }
       ]
     },
@@ -202,10 +228,13 @@
       "name": "t:sections.newsletter.presets.name",
       "blocks": [
         {
-          "type": "heading"
+          "type": "meta"
         },
         {
           "type": "paragraph"
+        },
+        {
+          "type": "heading"
         },
         {
           "type": "email_form"
